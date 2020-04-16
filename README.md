@@ -32,6 +32,7 @@ Your app is ready to be deployed!
 `<FormattedMessage id="app.text" defaultMessage="Mensageo"/>`
 and the following import:
 `import { FormattedMessage } from 'react-intl';`
+
 2: Add the json reference in the all translations file:
 `src/translations/en.json`
 with the proper keys:
@@ -39,5 +40,27 @@ with the proper keys:
 
 You can find more options and information: https://github.com/formatjs/react-intl
 
-### Using the mock server `https://github.com/Mensageo-app/mock_api_server`
+### Using the mock server
 Clone https://github.com/Mensageo-app/mock_api_server, run `npm install` and `npm start` to have a json server serving mock data for mensageo app.
+
+### Docker
+1: Make sure your Docker engine with Kubernetes support is enabled (check the kubernetes tab in the docker-desktop settings)
+
+2: Build the React app with `npm run-script build`
+
+3: Dockerize the application with `docker build -t web-app .`
+
+4: Create a local Docker registry with `docker run -d -p 5000:5000 --restart=always --name registry registry:2`
+
+5: Tag the Docker image with `docker tag web-app localhost:5000/web-app`
+
+6: Push the Docker image with `docker push localhost:5000/web-app`
+
+7: Create the Kubernetes service and deployment with `kubectl apply -f deployment.yaml`
+
+8: Visit http://localhost:31000 to see the application
+
+### EsLint
+The style lint is added to the git hooks and it runs with every commit.
+To auto fix complains you can run `npx eslint --fix your_file`.
+More info can be found here: https://eslint.org/ 
